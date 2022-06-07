@@ -13,12 +13,16 @@ class TodoListTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function test_store_todo_list()
     {
-        // preparation
+        $this->withoutExceptionHandling();
+        // preparation / prepare
 
-        // action
+        // action / perform
+        // $response = $this->getJson('api/todo-list');
+        $response = $this->getJson(route('todo-list.store'));
 
-        // assertion
+        // assertion / predict
+        $this->assertEquals(1, count($response->json()));
     }
 }
