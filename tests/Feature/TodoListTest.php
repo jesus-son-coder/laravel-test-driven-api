@@ -55,21 +55,20 @@ class TodoListTest extends TestCase
     public function test_store_new_todo_list()
     {
         // Preperation :
-
+        //$list = TodoList::factory()->create(['name' => 'my NEW list']);
+        $list = TodoList::factory()->make(); // "make" crée la Data, mais ne la stocke pas en Base de données !!
 
         // Action / Perform :
-        $response = $this->postJson(route('todo-list.store'), [
-            'name' => 'my NEW list'
-        ])
+        $response = $this->postJson(route('todo-list.store'), ['name' => $list->name])
             ->assertCreated()
             ->json();
 
         // Assertion / Predict :
-        $this->assertEquals('my NEW list', $response['name']);
+        $this->assertEquals($list->name, $response['name']);
         /*
          * We expect to have the data "['name' => 'my NEW list']"
          * in the Table called "todo_lists" :
          */
-        $this->assertDatabaseHas('todo_lists', ['name' => 'my NEW list']);
+        $this->assertDatabaseHas('todo_lists', ['name' => $list->name]);
     }
 }

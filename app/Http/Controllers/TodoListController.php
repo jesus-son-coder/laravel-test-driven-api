@@ -27,7 +27,8 @@ class TodoListController extends Controller
         $list = TodoList::create($request->all());
 
         // return response($list, 201);
-        return response($list, Response::HTTP_CREATED);
+        // return response($list, Response::HTTP_CREATED);
+        return $list;
     }
 
 }
