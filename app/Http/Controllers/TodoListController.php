@@ -14,4 +14,10 @@ class TodoListController extends Controller
         // ou
         return response($lists);
     }
+
+    public function show($id)
+    {
+        $list = TodoList::find($id);
+        return response($list);
+    }
 }
