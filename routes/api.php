@@ -10,3 +10,4 @@ Route::get('todo-list/{todolist}', [TodoListController::class, 'show'])->name('t
 
 Route::post('todo-list', [TodoListController::class,'store'])->name('todo-list.store');
 
+Route::delete('todo-list/{todolist}', [TodoListController::class, 'destroy'])->name('todo-list.destroy');
