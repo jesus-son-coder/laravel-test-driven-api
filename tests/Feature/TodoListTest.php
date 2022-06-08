@@ -80,7 +80,8 @@ class TodoListTest extends TestCase
         $this->withExceptionHandling();
 
         $response = $this->postJson(route('todo-list.store'))
-                    ->assertStatus(422);
+                    //->assertStatus(422);
+                    ->assertUnprocessable();
 
     }
 }
