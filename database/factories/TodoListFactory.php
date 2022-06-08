@@ -20,7 +20,7 @@ class TodoListFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'my list'
+            'name' => $this->faker->sentence
         ];
     }
 }
