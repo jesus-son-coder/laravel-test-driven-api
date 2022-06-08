@@ -35,10 +35,27 @@ class TodoListTest extends TestCase
         $list = TodoList::factory()->create(); // crée un élément en base de données
 
         // Action
-        $response = $this->getJson(route('todo-list.show', 1));
+        $response = $this->getJson(route('todo-list.show', $list->id));
 
         // Assertion
         $response->assertStatus(200);
+        // ou
+        $response->assertOk();
+
         $this->assertEquals($response->json()['name'], $list->name);
+    }
+
+    public function test_fetch_single_todo_list_optimise()
+    {
+        // Preperation
+        $list = TodoList::factory()->create();  // crée un élément en base de données
+
+        // Action
+        $response = $this->getJson(route('todo-list.show', $list->id))
+                    ->assertOk()
+                    ->json();
+
+        // Assertion :
+        $this->assertEquals($response['name'], $list->name);
     }
 }

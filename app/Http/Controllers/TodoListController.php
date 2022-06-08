@@ -15,9 +15,17 @@ class TodoListController extends Controller
         return response($lists);
     }
 
-    public function show($id)
+    public function show(TodoList $todolist)
     {
-        $list = TodoList::find($id);
-        return response($list);
+        // LE "TYPED-HINT" :
+        // ----------------
+
+        // Grâce au type de l'argument dans la signature de la méthode
+        // -> pas besoin du code ci-dessous :
+            //$list = TodoList::findOrFail($id);
+
+        // on peut récupérer directement l'argument et l'envoyer dans la réponse :
+        return response($todolist);
     }
 }
+
