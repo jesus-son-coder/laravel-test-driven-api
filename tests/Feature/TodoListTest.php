@@ -10,52 +10,45 @@ use Tests\TestCase;
 class TodoListTest extends TestCase
 {
     use RefreshDatabase; // this will re-run all the migrations and clean the tables in database
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_fetch_all_todo_list()
-    {
-        // preparation / prepare
-        TodoList::factory()->create(['name' => 'my list']);
 
-        // action / perform
-        // $response = $this->getJson('api/todo-list');
+    private TodoList $list;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->list = TodoList::factory()->create(['name' => 'my list']);
+
+    }
+
+    public function test_fetch_all_todo_list(): void
+    {
+        // Action / Perform :
         $response = $this->getJson(route('todo-list.store'));
 
-        // assertion / predict
-        $this->assertEquals(1, count($response->json()));
+        // Assertion / Predict
+        $this->assertCount(1, $response->json());
         $this->assertEquals('my list', $response->json()[0]['name']);
     }
 
     public function test_fetch_single_todo_list()
     {
-        // Preperation
-        $list = TodoList::factory()->create(); // crée un élément en base de données
+        // Action / Perform :
+        $response = $this->getJson(route('todo-list.show', $this->list->id));
 
-        // Action
-        $response = $this->getJson(route('todo-list.show', $list->id));
-
-        // Assertion
-        $response->assertStatus(200);
-        // ou
+        // Assertion / Predict :
         $response->assertOk();
-
-        $this->assertEquals($response->json()['name'], $list->name);
+        $this->assertEquals($response->json()['name'], $this->list->name);
     }
 
     public function test_fetch_single_todo_list_optimise()
     {
-        // Preperation
-        $list = TodoList::factory()->create();  // crée un élément en base de données
-
-        // Action
-        $response = $this->getJson(route('todo-list.show', $list->id))
+        // Action / Perform :
+        $response = $this->getJson(route('todo-list.show', $this->list->id))
                     ->assertOk()
                     ->json();
 
-        // Assertion :
-        $this->assertEquals($response['name'], $list->name);
+        // Assertion / Predict :
+        $this->assertEquals($response['name'], $this->list->name);
     }
 }
