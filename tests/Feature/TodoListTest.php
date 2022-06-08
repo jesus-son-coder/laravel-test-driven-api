@@ -58,14 +58,14 @@ class TodoListTest extends TestCase
 
 
         // Action / Perform :
-        $this->postJson(route('todo-list.store'), [
+        $response = $this->postJson(route('todo-list.store'), [
             'name' => 'my NEW list'
         ])
-            ->assertStatus(201);
-            // ou "assertSuccessful()" => c'est pareil que le "201" : pour ressource créée !
-            // ou encore "assertCreated()" => pour la ressource créée avec succès !
+            ->assertCreated()
+            ->json();
 
         // Assertion / Predict :
+        $this->assertEquals('my NEW list', $response['name']);
         /*
          * We expect to have the data "['name' => 'my NEW list']"
          * in the Table called "todo_lists" :

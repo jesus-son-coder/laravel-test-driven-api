@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TodoList;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
@@ -24,9 +24,10 @@ class TodoListController extends Controller
 
     public function store(Request $request)
     {
-        TodoList::create(['name' => $request->name]);
+        $list = TodoList::create($request->all());
 
-        return response('', 201);
+        // return response($list, 201);
+        return response($list, Response::HTTP_CREATED);
     }
 
 }
