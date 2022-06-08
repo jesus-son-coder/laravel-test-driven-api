@@ -83,5 +83,19 @@ class TodoListTest extends TestCase
                     //->assertStatus(422);
                     ->assertUnprocessable();
 
+        //dd($response->json());
+
+        /* Pour voir plus de détails sur la nature de l'erreur,
+            debugguer la reponse comme suit :
+            dd($response->json());
+            -> et vous verrez que le champ "name" est requis et manquant
+                avec le message suivant : "message" => "The name field is required."
+                Du coup, le Post ne peut pas $etre "processable" comme le signifie l'assertion "assertUnprocessable".
+
+        Ainsi, dans notre assertion, ci-dessous, on peut identifier le champ posant problème avec "assertJsonValidationErrors"
+        */
+
+        // Assertion / Predict :
+        $response->assertJsonValidationErrors(['name']);
     }
 }
